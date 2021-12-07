@@ -1,2 +1,1 @@
-# trex
-jogo do dinossauro do google
+# Trex-Etapa-0.5
