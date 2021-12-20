@@ -12,16 +12,30 @@
 
  var chaopou2
 
+ var cactus
+ var catus1
+ var catus2
+ var catus3
+ var catus4
+ var catus5
+ var catus6
+
   //oque carrega todas as imagems no jogo
 function preload(){
   trex_running=loadAnimation("trex1.png","trex3.png","trex4.png");
   chaojpg=loadImage("ground2.png");
   nuvemjpg=loadImage("uvem.png");
+  catus1=loadImage("obstacle1.png");
+  catus2=loadImage("obstacle2.png");
+  catus3=loadImage("obstacle3.png");
+  catus4=loadImage("obstacle4.png");
+  catus5=loadImage("obstacle5.png");
+  catus6=loadImage("obstacle6.png");
 }
   //a propoção do cenario(n aumenta muito pq ai n carrega)
 function setup(){
   createCanvas(600,200);
-  
+
   //criando o trex
  trex = createSprite(50,175,25,25);
  trex.addAnimation("meteoro",trex_running);
@@ -32,6 +46,7 @@ function setup(){
  chao.addImage(chaojpg) 
  chaopou2 = createSprite(300,190,600,10);
  chaopou2.visible=false
+
 }
 
 function draw(){
@@ -56,6 +71,7 @@ function draw(){
   {
     chao.x=chao.width/2
   }
+ fazCactus();
 }
   //isso faz nuvem ou peido depende:D
 function uvem(){
@@ -66,6 +82,39 @@ function uvem(){
   nuvem.scale=0.7;
   nuvem.y=Math.round(random(20,100));
   nuvem.depth=trex.depth
-  trex.depth=trex.depth+1;
+  trex.depth=trex.depth
+  nuvem.lifetime=360;
  }
 }
+function fazCactus(){
+  if(frameCount %120==0){
+  cactus=createSprite(600,175);
+  cactus.velocityX=-6
+  var zoio=Math.round(random(1,6))
+  cactus.scale=0.5
+  cactus.lifetime=360;
+  switch (zoio) {
+    case 1:cactus.addImage(catus1);
+      
+      break;
+    case 2:cactus.addImage(catus2);
+      
+      break;
+    case 3:cactus.addImage(catus3);
+      
+      break;
+    case 4:cactus.addImage(catus4);
+      
+      break;
+    case 5:cactus.addImage(catus5);
+      
+      break;
+    case 6:cactus.addImage(catus6);
+      
+    break;
+    default:
+      break;
+  }
+}
+}
+//bo morre nuvem
