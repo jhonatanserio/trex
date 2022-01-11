@@ -52,7 +52,7 @@ function setup(){
   //criando o trex
  trex = createSprite(50,175,25,25);
  trex.addAnimation("meteoro",trex_running);
- trex.addAnimation("planta",trexmimir);
+ trex.addAnimation("feddy",trexmimir);
   //adicione dimensão e posição ao trex
  trex.scale=0.5
   //o q defini onde chao fica (melhor nome ever)
@@ -60,7 +60,8 @@ function setup(){
  chao.addImage(chaojpg) 
  chaopou2 = createSprite(300,190,600,10);
  chaopou2.visible=false
-
+ trex.setCollider("circle",0,0,35)
+ trex.debug=false
 }
 
 function draw(){
@@ -70,7 +71,7 @@ function draw(){
   if(estadodojogo == jojo){
           //pular quando tecla de espaço for pressionada(n da pra spamar)
           if(keyDown("space")&&trex.y>160.5){
-          trex.velocityY=-10;
+          trex.velocityY=-13;
           //mostra a altura do trex
           console.log(trex.y);
           //oque faz o trex n sai da tela caindo no void infinito
@@ -96,7 +97,11 @@ function draw(){
   else if(estadodojogo == fimdejogo){
     chao.velocityX=0;
     trex.velocityY=0;
-    trex.chargeAnimation("planta",trexmimir)
+    grupobranco.setLifetimeEach(-1);
+    grupoverde.setLifetimeEach(-1);
+    grupobranco.setVelocityXEach(0)
+    grupoverde.setVelocityXEach(0)
+    trex.changeAnimation("feddy",trexmimir)
   }
   trex.collide(chaopou2);
   drawSprites();
