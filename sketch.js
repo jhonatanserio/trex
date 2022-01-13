@@ -4,6 +4,8 @@
 
  var chao
  
+ var ponto=0
+
  var nuvem
 
  var nuvemjpg
@@ -57,16 +59,19 @@ function setup(){
  trex.scale=0.5
   //o q defini onde chao fica (melhor nome ever)
  chao = createSprite(300,180,600,5);
- chao.addImage(chaojpg) 
+ chao.addImage(chaojpg) ;
  chaopou2 = createSprite(300,190,600,10);
- chaopou2.visible=false
- trex.setCollider("circle",0,0,35)
- trex.debug=false
+ chaopou2.visible=false;
+ trex.setCollider("circle",0,0,35);
+ trex.debug=false;
 }
 
 function draw(){
   //definir a cor do plano de fundo 
   background ("white");
+  text("ponto: "+ponto,500,50);
+  ponto.depth+1;
+  
   
   if(estadodojogo == jojo){
           //pular quando tecla de espaço for pressionada(n da pra spamar)
@@ -78,18 +83,19 @@ function draw(){
           }
           trex.velocityY=trex.velocityY +0.8;
       
-          chao.velocityX=-10
+          chao.velocityX=-(10+0.5*ponto/200);
           //parte 2 do faz nuvem(to chamando ela)
           uvem()
           //oque faz o chão se infinito
           
           if(chao.x<0)
           {
-            chao.x=chao.width/2
+            chao.x=chao.width/2;
           }
           if(grupoverde.isTouching(trex)){
-            estadodojogo = fimdejogo
+            estadodojogo = fimdejogo;
           }
+          ponto=ponto+Math.round(frameCount/240);
           fazCactus();
          
 }
@@ -99,9 +105,10 @@ function draw(){
     trex.velocityY=0;
     grupobranco.setLifetimeEach(-1);
     grupoverde.setLifetimeEach(-1);
-    grupobranco.setVelocityXEach(0)
-    grupoverde.setVelocityXEach(0)
-    trex.changeAnimation("feddy",trexmimir)
+    grupobranco.setVelocityXEach(0);
+    grupoverde.setVelocityXEach(0);
+    trex.changeAnimation("feddy",trexmimir);
+    ponto=ponto+0;
   }
   trex.collide(chaopou2);
   drawSprites();
@@ -109,14 +116,14 @@ function draw(){
 }
   //isso faz nuvem ou peido depende:D
 function uvem(){
- if(frameCount %120==0){
+ if(frameCount %120==0*ponto/200){
   nuvem=createSprite(600,80,30,30);
-  nuvem.velocityX=-2;
+  nuvem.velocityX=-(2+0.5*ponto/200)
   nuvem.addImage(nuvemjpg);
   nuvem.scale=0.7;
   nuvem.y=Math.round(random(20,100));
-  nuvem.depth=trex.depth
-  trex.depth=trex.depth
+  nuvem.depth=trex.depth;
+  trex.depth=trex.depth+1;
   nuvem.lifetime=360;
   grupobranco.add(nuvem);
  }
@@ -124,9 +131,9 @@ function uvem(){
 function fazCactus(){
   if(frameCount %120==0){
   cactus=createSprite(600,175);
-  cactus.velocityX=-6
-  var zoio=Math.round(random(1,6))
-  cactus.scale=0.5
+  cactus.velocityX=-(6+0.5*ponto/200);
+  var zoio=Math.round(random(1,6));
+  cactus.scale=0.5;
   cactus.lifetime=360;
   switch (zoio) {
     case 1:cactus.addImage(catus1);
