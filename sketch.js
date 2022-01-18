@@ -2,7 +2,21 @@
 
  var groundImage;
 
+ var somPulante
+ 
+ var acabo
+ 
+ var acaboPng
+ 
+ var restart
+
+ var restartPng
+
+ var check
+
  var chao
+
+ var somFaleceu
  
  var ponto=0
 
@@ -34,6 +48,8 @@
 
   //oque carrega todas as imagems no jogo
 function preload(){
+  acaboPng=loadImage("gameOver.png")
+  restartPng=loadImage("restart.png ")
   trex_running=loadAnimation("trex1.png","trex3.png","trex4.png");
   trexmimir=loadAnimation("trex_collided.png")
   chaojpg=loadImage("ground2.png");
@@ -44,6 +60,9 @@ function preload(){
   catus4=loadImage("obstacle4.png");
   catus5=loadImage("obstacle5.png");
   catus6=loadImage("obstacle6.png");
+  somPulante=loadSound("jump.mp3")
+  check=loadSound("checkpoint.mp3")
+  somFaleceu=loadSound("die.mp3")
 
 }
   //a propoção do cenario(n aumenta muito pq ai n carrega)
@@ -64,6 +83,15 @@ function setup(){
  chaopou2.visible=false;
  trex.setCollider("circle",0,0,35);
  trex.debug=false;
+ 
+ restart=createSprite(300,100,10,10);
+ restart.addImage(restartPng);
+ restart.scale=0.5;
+ restart.visible=false
+ acabo = createSprite(300,75,10,10)
+ acabo.addImage(acaboPng)
+ acabo.scale=0.8;
+ acabo.visible=false
 }
 
 function draw(){
@@ -73,10 +101,12 @@ function draw(){
   ponto.depth+1;
   
   
+  
   if(estadodojogo == jojo){
           //pular quando tecla de espaço for pressionada(n da pra spamar)
           if(keyDown("space")&&trex.y>160.5){
           trex.velocityY=-13;
+          somPulante.play()
           //mostra a altura do trex
           console.log(trex.y);
           //oque faz o trex n sai da tela caindo no void infinito
@@ -94,8 +124,13 @@ function draw(){
           }
           if(grupoverde.isTouching(trex)){
             estadodojogo = fimdejogo;
+            somFaleceu.play()
           }
           ponto=ponto+Math.round(frameCount/240);
+          if(ponto>0&&ponto%200==0){
+            check.play();
+          }
+
           fazCactus();
          
 }
@@ -109,6 +144,13 @@ function draw(){
     grupoverde.setVelocityXEach(0);
     trex.changeAnimation("feddy",trexmimir);
     ponto=ponto+0;
+    acabo.visible=true
+    restart.visible=true
+    if(mousePressedOver(restart)){
+     pontoZero ();
+    }
+
+    
   }
   trex.collide(chaopou2);
   drawSprites();
@@ -160,6 +202,15 @@ function fazCactus(){
   grupoverde.add(cactus);
 }
 
+}
+function pontoZero(){
+  estadodojogo=jojo;
+  grupoverde.destroyEach();
+  grupobranco.destroyEach();
+  restart.visible=false
+  acabo.visible=false
+  ponto=0;
+  trex.changeAnimation("meteoro",trex_running)
 }
 
 //bo morre nuvem
