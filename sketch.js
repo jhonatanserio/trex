@@ -62,12 +62,12 @@ function preload(){
   catus6=loadImage("obstacle6.png");
   somPulante=loadSound("jump.mp3")
   check=loadSound("checkpoint.mp3")
-  somFaleceu=loadSound("die.mp3")
+  somFaleceu=loadSound("tututu.mp3")
 
 }
   //a propoção do cenario(n aumenta muito pq ai n carrega)
 function setup(){
-  createCanvas(600,200);
+  createCanvas(windowWidth,windowHeight);
   grupoverde = new Group();
   grupobranco = new Group();
   //criando o trex
@@ -84,11 +84,11 @@ function setup(){
  trex.setCollider("circle",0,0,35);
  trex.debug=false;
  
- restart=createSprite(300,100,10,10);
+ restart=createSprite(width/2,height-520,10,10);
  restart.addImage(restartPng);
  restart.scale=0.5;
  restart.visible=false
- acabo = createSprite(300,75,10,10)
+ acabo = createSprite(width/2,height-550,10,10)
  acabo.addImage(acaboPng)
  acabo.scale=0.8;
  acabo.visible=false
@@ -127,7 +127,7 @@ function draw(){
             somFaleceu.play()
           }
           ponto=ponto+Math.round(frameCount/240);
-          if(ponto>0&&ponto%200==0){
+          if(ponto>0&&ponto%400==0){
             check.play();
           }
 
@@ -158,21 +158,21 @@ function draw(){
 }
   //isso faz nuvem ou peido depende:D
 function uvem(){
- if(frameCount %120==0*ponto/200){
-  nuvem=createSprite(600,80,30,30);
+ if(frameCount %80==0*ponto/200){
+  nuvem=createSprite(width,80,30,30);
   nuvem.velocityX=-(2+0.5*ponto/200)
   nuvem.addImage(nuvemjpg);
   nuvem.scale=0.7;
   nuvem.y=Math.round(random(20,100));
   nuvem.depth=trex.depth;
   trex.depth=trex.depth+1;
-  nuvem.lifetime=360;
+  nuvem.lifetime=620;
   grupobranco.add(nuvem);
  }
 }
 function fazCactus(){
-  if(frameCount %120==0){
-  cactus=createSprite(600,175);
+  if(frameCount %60==0){
+  cactus=createSprite(width,175);
   cactus.velocityX=-(6+0.5*ponto/200);
   var zoio=Math.round(random(1,6));
   cactus.scale=0.5;
